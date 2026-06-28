@@ -9,6 +9,14 @@ app.secret_key = "secret_key"
 def home():
     return redirect('/login')
 
+@app.route('/register', methods=['GET','POST'])
+def register():
+    pass
+
+@app.route('/login', methods=['GET','POST'])
+def login():
+    pass
+
 # Create Database
 conn = sqlite3.connect("users.db")
 cursor = conn.cursor()
