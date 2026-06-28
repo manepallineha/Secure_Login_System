@@ -76,16 +76,14 @@ Secure-Login-System/
 ## Installation
 
 Install the required libraries:
-
 pip install flask bcrypt
 
 Run the application:
-
 python app.py
 
 Open in your browser:
-
 http://127.0.0.1:5000
+Note: This URL works only when the application is running locally on your machine.
 
 ## Future Enhancements
 
