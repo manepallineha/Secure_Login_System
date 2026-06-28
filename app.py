@@ -5,6 +5,10 @@ import bcrypt
 app = Flask(__name__)
 app.secret_key = "secret_key"
 
+@app.route('/')
+def home():
+    return redirect('/login')
+
 # Create Database
 conn = sqlite3.connect("users.db")
 cursor = conn.cursor()
