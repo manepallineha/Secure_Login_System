@@ -5,19 +5,13 @@ import bcrypt
 app = Flask(__name__)
 app.secret_key = "secret_key"
 
+
 @app.route('/')
 def home():
     return redirect('/login')
 
-@app.route('/register', methods=['GET','POST'])
-def register():
-    pass
 
-@app.route('/login', methods=['GET','POST'])
-def login():
-    pass
-
-# Create Database
+# ---------------- DATABASE INIT ----------------
 conn = sqlite3.connect("users.db")
 cursor = conn.cursor()
 
@@ -32,7 +26,8 @@ password TEXT
 conn.commit()
 conn.close()
 
-# Registration
+
+# ---------------- REGISTER ----------------
 @app.route('/register', methods=['GET','POST'])
 def register():
 
@@ -41,10 +36,7 @@ def register():
         username = request.form['username']
         password = request.form['password']
 
-        hashed = bcrypt.hashpw(
-            password.encode('utf-8'),
-            bcrypt.gensalt()
-        )
+        hashed = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
         conn = sqlite3.connect("users.db")
         cursor = conn.cursor()
@@ -56,15 +48,18 @@ def register():
             )
 
             conn.commit()
+            conn.close()
 
             return redirect('/login')
 
         except:
+            conn.close()
             return "User already exists"
 
     return render_template("register.html")
 
-# Login
+
+# ---------------- LOGIN ----------------
 @app.route('/login', methods=['GET','POST'])
 def login():
 
@@ -82,15 +77,14 @@ def login():
         )
 
         user = cursor.fetchone()
+        conn.close()
 
         if user:
 
             stored_password = user[2]
 
-            if bcrypt.checkpw(
-                password.encode('utf-8'),
-                stored_password
-            ):
+            if bcrypt.checkpw(password.encode('utf-8'), stored_password):
+
                 session['user'] = username
                 return redirect('/dashboard')
 
@@ -98,25 +92,24 @@ def login():
 
     return render_template("login.html")
 
-# Dashboard
+
+# ---------------- DASHBOARD ----------------
 @app.route('/dashboard')
 def dashboard():
 
     if 'user' in session:
-        return render_template(
-            "dashboard.html",
-            username=session['user']
-        )
+        return render_template("dashboard.html", username=session['user'])
 
     return redirect('/login')
 
-# Logout
+
+# ---------------- LOGOUT ----------------
 @app.route('/logout')
 def logout():
 
     session.pop('user', None)
-
     return redirect('/login')
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
