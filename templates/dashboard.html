@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SecureVault Dashboard</title>
+
+    <style>
+
+        body{
+            margin:0;
+            font-family:Arial,sans-serif;
+            background:linear-gradient(135deg,#0f172a,#111827);
+            color:white;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            height:100vh;
+        }
+
+        .dashboard{
+            width:600px;
+            background:rgba(255,255,255,0.08);
+            backdrop-filter:blur(12px);
+            padding:35px;
+            border-radius:15px;
+            box-shadow:0 0 25px rgba(34,197,94,0.3);
+            text-align:center;
+        }
+
+        .status{
+            background:#1e293b;
+            padding:20px;
+            border-radius:10px;
+            margin-top:20px;
+            text-align:left;
+        }
+
+        .status p{
+            font-size:16px;
+        }
+
+        .logout{
+            display:inline-block;
+            margin-top:20px;
+            padding:12px 20px;
+            background:#ef4444;
+            color:white;
+            text-decoration:none;
+            border-radius:8px;
+        }
+
+        .logout:hover{
+            background:#dc2626;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <h1>🛡️ Security Dashboard</h1>
+
+    <h2>Welcome, {{username}}</h2>
+
+    <p>Your account is protected and authenticated.</p>
+
+    <div class="status">
+
+        <h3>Security Status</h3>
+
+        <p>✅ Authentication Successful</p>
+
+        <p>✅ Password Encrypted using bcrypt</p>
+
+        <p>✅ Session Active</p>
+
+        <p>✅ SQL Injection Protection Enabled</p>
+
+    </div>
+
+    <a href="/logout" class="logout">
+        Logout
+    </a>
+
+</div>
+
+</body>
+</html>
